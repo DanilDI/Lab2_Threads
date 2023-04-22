@@ -26,6 +26,10 @@ namespace Lab2_Threads
 			this.commonPath = commonPath;
 			this.thread = new Thread(new ThreadStart(post));
 		}
+		~MyThread()
+		{
+			thread.Abort(); 
+		}
 		private void post()
 		{
 			while (true)
@@ -33,10 +37,10 @@ namespace Lab2_Threads
 				if(messageChanged==true)
 				{
 					messageChanged = false;
-					File.WriteAllText(path, message);
+					File.AppendAllText(path, message + '\n');
 					lock (locker)
 					{
-						File.WriteAllText(commonPath, message);
+						File.AppendAllText(commonPath, message+'\n');
 					}
 				}
 				

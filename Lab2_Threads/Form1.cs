@@ -43,6 +43,7 @@ namespace Lab2_Threads
 				TimeSpan t = TimeSpan.FromMilliseconds(threadTime*100);
 				tableLayoutPanel.GetChildAtPoint(new Point(300, -5 + i * 27)).Text= t.ToString("hh\\:mm\\:ss'.'f");
 			}
+			
 		}
 
 
@@ -63,6 +64,9 @@ namespace Lab2_Threads
 			tmp2.Width = 225;
 			tableLayoutPanel.Controls.Add(tmp2);
 			tableLayoutPanel.RowCount++;
+
+			comboBoxNumber.Items.Add(index);
+			comboBoxNumber.SelectedItem = index;
 		}
 
 		private void buttonStop_Click(object sender, EventArgs e)
@@ -70,22 +74,53 @@ namespace Lab2_Threads
 			
 			if(tableLayoutPanel.RowCount==2)
 			{
+				Application.Exit();
 				return;
 			}
+
+			int index = Convert.ToInt32(tableLayoutPanel.GetChildAtPoint(new Point(100, -5 + ((tableLayoutPanel.RowCount - 1) * 27))).Text);
+
+			
+			handler.killThread(index);
+			comboBoxNumber.Items.Remove(index);
+			if (comboBoxNumber.SelectedItem ==null|| (int)comboBoxNumber.SelectedItem == index)
+			{
+				
+				comboBoxNumber.SelectedItem = handler.getFreeIndex()-1;
+
+			}
+	
 			tableLayoutPanel.GetChildAtPoint(new Point(100, -5+(tableLayoutPanel.RowCount-1)*27)).Dispose();
 			tableLayoutPanel.GetChildAtPoint(new Point(100, -5+ (tableLayoutPanel.RowCount - 1) * 27)).Dispose();
+	
 			tableLayoutPanel.RowCount--;
 		}
 
 		private void buttonExit_Click(object sender, EventArgs e)
 		{
-
+			handler.killAllThreads();
+			Application.Exit();
 		}
 
 		private void buttonSend_Click(object sender, EventArgs e)
 		{
-
-			handler.getThread(1).send(richTextBoxMessage.Text);
+			if(radioButtonAll.Checked)
+			{
+				int[] indexes = handler.getIndexes();
+				foreach(int i in indexes)
+				{
+					handler.getThread(i).send(richTextBoxMessage.Text);
+				}
+			}
+			else
+			{
+				if(comboBoxNumber.SelectedItem==null|| handler.getThreadsNumber()==0)
+				{
+					return;
+				}
+				handler.getThread((int)comboBoxNumber.SelectedItem).send(richTextBoxMessage.Text);
+			}
+			
 			
 		}
 

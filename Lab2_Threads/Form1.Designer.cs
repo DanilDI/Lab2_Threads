@@ -101,6 +101,7 @@ namespace Lab2_Threads
 			// radioButtonAll
 			// 
 			this.radioButtonAll.AutoSize = true;
+			this.radioButtonAll.Checked = true;
 			this.radioButtonAll.Location = new System.Drawing.Point(540, 350);
 			this.radioButtonAll.Name = "radioButtonAll";
 			this.radioButtonAll.Size = new System.Drawing.Size(94, 19);
@@ -116,7 +117,6 @@ namespace Lab2_Threads
 			this.radioButtonNumber.Name = "radioButtonNumber";
 			this.radioButtonNumber.Size = new System.Drawing.Size(119, 19);
 			this.radioButtonNumber.TabIndex = 6;
-			this.radioButtonNumber.TabStop = true;
 			this.radioButtonNumber.Text = "To thread number";
 			this.radioButtonNumber.UseVisualStyleBackColor = true;
 			// 

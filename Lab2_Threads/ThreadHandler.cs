@@ -33,5 +33,23 @@ namespace Lab2_Threads
 			threads.Add(index, t);
 			return index;
 		}
+		public int[] getIndexes()
+		{
+			int[] indexes = new int[threads.Count];
+			threads.Keys.CopyTo(indexes,0);
+			return indexes;
+		}
+		public int getThreadsNumber()
+		{
+			return threads.Count();
+		}
+		public void killThread(int i)
+		{
+			threads.Remove(i);
+		}
+		public void killAllThreads()
+		{
+			threads  = new Dictionary<int, MyThread>();
+		}
 	}
 }
